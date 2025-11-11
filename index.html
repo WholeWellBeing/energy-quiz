@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Am I So Tired? - Energy Assessment</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fef08a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+        }
+        
+        .icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .brand {
+            text-align: center;
+            color: #f97316;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 30px;
+        }
+        
+        .benefits {
+            background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .benefit {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .benefit:last-child {
+            margin-bottom: 0;
+        }
+        
+        .checkmark {
+            width: 24px;
+            height: 24px;
+            background: #f97316;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .benefit-text {
+            color: #374151;
+            line-height: 1.6;
+        }
+        
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f97316 0%, #f59e0b 100%);
+            transition: width 0.3s ease;
+            border-radius: 999px;
+        }
+        
+        .question-title {
+            font-size: 1.75rem;
+            color: #1f2937;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+        
+        .slider-container {
+            margin-bottom: 25px;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: #e5e7eb;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #f97316;
+            cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #f97316;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .slider-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f97316;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option-btn {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #374151;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        
+        .option-btn:hover {
+            border-color: #f97316;
+            background: #fff7ed;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+        }
+        
+        .disclaimer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 15px;
+        }
+        
+        .results-container {
+            text-align: center;
+        }
+        
+        .score-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .score-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .score-number span {
+            font-size: 1.5rem;
+            color: #6b7280;
+        }
+        
+        .score-status {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .drainers-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        
+        .drainers-subtitle {
+            color: #6b7280;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .drainer-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .drainer-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .drainer-content {
+            flex: 1;
+        }
+        
+        .drainer-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .drainer-score {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #6b7280;
+        }
+        
+        .drainer-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        
+        .drainer-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f97316 0%, #f59e0b 100%);
+            border-radius: 999px;
+        }
+        
+        .insight-box {
+            background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        
+        .insight-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .insight-text {
+            color: #374151;
+            line-height: 1.7;
+        }
+        
+        .email-section {
+            border-top: 2px solid #e5e7eb;
+            padding-top: 30px;
+            margin-top: 30px;
+        }
+        
+        .email-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .email-subtitle {
+            font-size: 1.125rem;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .email-description {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+        
+        .email-form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .email-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 14px 16px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .email-input:focus {
+            border-color: #f97316;
+        }
+        
+        .email-btn {
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+        
+        .email-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4);
+        }
+        
+        .privacy-note {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-align: center;
+            margin-top: 12px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .question-title {
+                font-size: 1.5rem;
+            }
+            
+            .email-form {
+                flex-direction: column;
+            }
+            
+            .email-input {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Stage -->
+        <div id="welcome-stage">
+            <div class="icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+            </div>
+            
+            <h1>Why Am I So Tired?</h1>
+            <p class="subtitle">Discover what's draining your energy and get your personalized roadmap to all-day vitality</p>
+            <p class="brand">From Whole Well Being Lifestyle Medicine</p>
+            
+            <div class="benefits">
+                <div class="benefit">
+                    <div class="checkmark">✓</div>
+                    <div class="benefit-text">12 quick questions about your daily habits and energy patterns</div>
+                </div>
+                <div class="benefit">
+                    <div class="checkmark">✓</div>
+                    <div class="benefit-text">Identify your biggest energy drainers across the 6 pillars of lifestyle medicine</div>
+                </div>
+                <div class="benefit">
+                    <div class="checkmark">✓</div>
+                    <div class="benefit-text">Get instant results plus your free Energy Reset Blueprint</div>
+                </div>
+            </div>
+            
+            <button class="btn-primary" onclick="startQuiz()">Start Energy Assessment</button>
+            <p class="disclaimer">Takes less than 3 minutes • 100% Free</p>
+        </div>
+        
+        <!-- Quiz Stage -->
+        <div id="quiz-stage" class="hidden">
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span id="pillar-name"></span>
+                    <span id="question-counter"></span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            
+            <h2 class="question-title" id="question-text"></h2>
+            
+            <div id="slider-question" class="hidden">
+                <div class="slider-container">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="slider">
+                </div>
+                <div class="slider-labels">
+                    <span id="slider-label-left"></span>
+                    <span class="slider-value" id="slider-value">5</span>
+                    <span id="slider-label-right"></span>
+                </div>
+                <button class="btn-primary" style="margin-top: 25px;" onclick="submitSliderAnswer()">Continue</button>
+            </div>
+            
+            <div id="multiple-question" class="hidden">
+                <div class="options" id="options-container"></div>
+            </div>
+        </div>
+        
+        <!-- Results Stage -->
+        <div id="results-stage" class="hidden">
+            <div class="results-container">
+                <div class="icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                </div>
+                
+                <h1>Your Energy Assessment Results</h1>
+                <p class="subtitle">Here's what's draining your energy</p>
+            </div>
+            
+            <div class="score-box">
+                <div class="score-label">Your Overall Energy Score</div>
+                <div class="score-number" id="overall-score">0<span>/10</span></div>
+                <div class="score-status" id="energy-status"></div>
+            </div>
+            
+            <h3 class="drainers-title">Your Top Energy Drainers</h3>
+            <p class="drainers-subtitle">These areas are impacting your energy the most:</p>
+            
+            <div id="drainers-list"></div>
+            
+            <div class="insight-box">
+                <h3 class="insight-title">The Good News</h3>
+                <p class="insight-text">Small improvements in these areas can have a profound impact on your daily energy. The 6 pillars of lifestyle medicine (nutrition, physical activity, sleep, stress management, social connection, and substance use) work together synergistically—when you improve one, the others often follow.</p>
+            </div>
+            
+            <div class="email-section">
+                <h3 class="email-title">Get Your Free Energy Reset Blueprint</h3>
+                <p class="email-subtitle">Your 30-Day Guide to All-Day Vitality</p>
+                <p class="email-description">Receive actionable strategies to reclaim your energy, based on evidence-based lifestyle medicine principles.</p>
+                
+                <div class="email-form">
+                    <input type="email" class="email-input" id="email-input" placeholder="Enter your email" required>
+                    <button class="email-btn" onclick="submitEmail()">Get My Blueprint</button>
+                </div>
+                <p class="privacy-note">Join the Whole Well Being Lifestyle Medicine community • Unsubscribe anytime</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const questions = [
+            {
+                pillar: 'Sleep',
+                question: 'How many hours of quality sleep do you typically get per night?',
+                type: 'multiple',
+                options: [
+                    { label: 'Less than 5 hours', value: 1 },
+                    { label: '5-6 hours', value: 3 },
+                    { label: '6-7 hours', value: 6 },
+                    { label: '7-8 hours', value: 9 },
+                    { label: '8+ hours', value: 10 }
+                ]
+            },
+            {
+                pillar: 'Sleep',
+                question: 'How would you rate your sleep quality?',
+                type: 'slider',
+                labels: ['Wake up exhausted', 'Wake up refreshed']
+            },
+            {
+                pillar: 'Nutrition',
+                question: 'How often do you eat processed or packaged foods?',
+                type: 'multiple',
+                options: [
+                    { label: 'Most meals', value: 2 },
+                    { label: 'About half of my meals', value: 5 },
+                    { label: 'Occasionally (a few times per week)', value: 8 },
+                    { label: 'Rarely (once a week or less)', value: 10 }
+                ]
+            },
+            {
+                pillar: 'Nutrition',
+                question: 'How would you describe your eating patterns?',
+                type: 'multiple',
+                options: [
+                    { label: 'Irregular meals, lots of processed foods', value: 2 },
+                    { label: 'Trying to eat well but inconsistent', value: 5 },
+                    { label: 'Regular balanced meals most days', value: 8 },
+                    { label: 'Consistent whole-food based meals', value: 10 }
+                ]
+            },
+            {
+                pillar: 'Movement',
+                question: 'How many days per week do you get at least 20 minutes of physical activity?',
+                type: 'multiple',
+                options: [
+                    { label: '0-1 days', value: 1 },
+                    { label: '2-3 days', value: 4 },
+                    { label: '4-5 days', value: 7 },
+                    { label: '6-7 days', value: 10 }
+                ]
+            },
+            {
+                pillar: 'Movement',
+                question: 'How energized do you feel after physical activity?',
+                type: 'slider',
+                labels: ['More exhausted', 'Energized & alive']
+            },
+            {
+                pillar: 'Stress',
+                question: 'How often do you feel calm and balanced (versus stressed)?',
+                type: 'slider',
+                labels: ['Rarely calm', 'Usually calm']
+            },
+            {
+                pillar: 'Stress',
+                question: 'Do you practice any stress-reduction techniques regularly?',
+                type: 'multiple',
+                options: [
+                    { label: "No, I don't have time", value: 1 },
+                    { label: 'Occasionally when I remember', value: 4 },
+                    { label: 'A few times per week', value: 7 },
+                    { label: 'Daily practice', value: 10 }
+                ]
+            },
+            {
+                pillar: 'Connection',
+                question: 'How connected do you feel to supportive relationships?',
+                type: 'slider',
+                labels: ['Isolated & alone', 'Deeply connected']
+            },
+            {
+                pillar: 'Substances',
+                question: 'How much caffeine do you consume daily?',
+                type: 'multiple',
+                options: [
+                    { label: 'None', value: 10 },
+                    { label: '1-2 cups of coffee/tea', value: 8 },
+                    { label: '3-4 cups', value: 5 },
+                    { label: '5+ cups or energy drinks', value: 2 }
+                ]
+            },
+            {
+                pillar: 'Substances',
+                question: 'How often do you use alcohol or other substances?',
+                type: 'multiple',
+                options: [
+                    { label: 'Never or rarely', value: 10 },
+                    { label: '1-2 times per week', value: 7 },
+                    { label: '3-5 times per week', value: 4 },
+                    { label: 'Daily', value: 1 }
+                ]
+            },
+            {
+                pillar: 'Nature',
+                question: 'How much time do you spend outdoors each week?',
+                type: 'multiple',
+                options: [
+                    { label: 'Almost none - mostly indoors', value: 1 },
+                    { label: 'Less than 1 hour', value: 4 },
+                    { label: '1-3 hours', value: 7 },
+                    { label: '3+ hours', value: 10 }
+                ]
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let answers = {};
+        
+        function startQuiz() {
+            document.getElementById('welcome-stage').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('hidden');
+            showQuestion();
+        }
+        
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            
+            document.getElementById('pillar-name').textContent = q.pillar;
+            document.getElementById('question-counter').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('question-text').textContent = q.question;
+            
+            if (q.type === 'slider') {
+                document.getElementById('slider-question').classList.remove('hidden');
+                document.getElementById('multiple-question').classList.add('hidden');
+                
+                const slider = document.getElementById('slider');
+                slider.value = answers[currentQuestion] || 5;
+                document.getElementById('slider-value').textContent = slider.value;
+                document.getElementById('slider-label-left').textContent = q.labels[0];
+                document.getElementById('slider-label-right').textContent = q.labels[1];
+                
+                slider.oninput = function() {
+                    document.getElementById('slider-value').textContent = this.value;
+                };
+            } else {
+                document.getElementById('slider-question').classList.add('hidden');
+                document.getElementById('multiple-question').classList.remove('hidden');
+                
+                const container = document.getElementById('options-container');
+                container.innerHTML = '';
+                
+                q.options.forEach(option => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = option.label;
+                    btn.onclick = () => submitMultipleAnswer(option.value);
+                    container.appendChild(btn);
+                });
+            }
+        }
+        
+        function submitSliderAnswer() {
+            const value = parseInt(document.getElementById('slider').value);
+            answers[currentQuestion] = value;
+            nextQuestion();
+        }
+        
+        function submitMultipleAnswer(value) {
+            answers[currentQuestion] = value;
+            nextQuestion();
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        function calculateScores() {
+            const pillars = ['Sleep', 'Nutrition', 'Movement', 'Stress', 'Connection', 'Substances', 'Nature'];
+            const scores = {};
+            
+            pillars.forEach(pillar => {
+                const pillarQuestions = questions
+                    .map((q, idx) => ({ ...q, idx }))
+                    .filter(q => q.pillar === pillar);
+                
+                const total = pillarQuestions.reduce((sum, q) => sum + (answers[q.idx] || 0), 0);
+                scores[pillar] = Math.round(total / pillarQuestions.length);
+            });
+            
+            return scores;
+        }
+        
+        function getEnergyLevel(score) {
+            if (score >= 8) return { label: 'High Energy Potential', color: '#10b981' };
+            if (score >= 6) return { label: 'Moderate Energy', color: '#f59e0b' };
+            if (score >= 4) return { label: 'Low Energy', color: '#f97316' };
+            return { label: 'Energy Crisis', color: '#ef4444' };
+        }
+        
+        function showResults() {
+            document.getElementById('quiz-stage').classList.add('hidden');
+            document.getElementById('results-stage').classList.remove('hidden');
+            
+            const scores = calculateScores();
+            const sortedScores = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+            const overallScore = Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.keys(scores).length);
+            const energyLevel = getEnergyLevel(overallScore);
+            
+            document.getElementById('overall-score').innerHTML = `${overallScore}<span>/10</span>`;
+            document.getElementById('energy-status').textContent = energyLevel.label;
+            document.getElementById('energy-status').style.color = energyLevel.color;
+            
+            const drainersList = document.getElementById('drainers-list');
+            drainersList.innerHTML = '';
+            
+            sortedScores.slice(0, 3).forEach(([pillar, score]) => {
+                const item = document.createElement('div');
+                item.className = 'drainer-item';
+                item.innerHTML = `
+                    <div class="drainer-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <div class="drainer-content">
+                        <div class="drainer-name">
+                            <span>${pillar}</span>
+                            <span class="drainer-score">${score}/10</span>
+                        </div>
+                        <div class="drainer-bar">
+                            <div class="drainer-bar-fill" style="width: ${score * 10}%"></div>
+                        </div>
+                    </div>
+                `;
+                drainersList.appendChild(item);
+            });
+        }
+        
+        function submitEmail() {
+            const email = document.getElementById('email-input').value;
+            if (email && email.includes('@')) {
+                // In production, send this to your email service/Podia
+                console.log('Email submitted:', email);
+                alert('Success! Check your email for your Energy Reset Blueprint. Welcome to the Whole Well Being Lifestyle Medicine community!');
+            } else {
+                alert('Please enter a valid email address');
+            }
+        }
+    </script>
+</body>
+</html>
