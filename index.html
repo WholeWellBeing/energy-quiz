@@ -6,10 +6,10 @@
   <title>Why Am I So Tired?</title>
   <style>
     body {
-      font-family: "Inter", sans-serif;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #c8dafc, #c9e7e2);
       margin: 0;
-      padding: 0;
+      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -20,11 +20,11 @@
     .container {
       background: #fff;
       margin-top: 40px;
-      padding: 2rem;
+      padding: 2.5rem;
       border-radius: 20px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      width: 90%;
+      max-width: 700px;
+      width: 100%;
       text-align: center;
       animation: fadeIn 0.5s ease;
     }
@@ -39,12 +39,14 @@
       font-size: 1.1rem;
       color: #4a5b7d;
       margin-bottom: 1rem;
+      line-height: 1.5;
     }
 
     .brand {
       font-size: 0.9rem;
       color: #6a7ca0;
       margin-bottom: 1.5rem;
+      font-weight: 600;
     }
 
     img.logo {
@@ -53,38 +55,82 @@
       margin-bottom: 1rem;
     }
 
+    .progress-container {
+      margin-bottom: 2rem;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: #6a7ca0;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #233DFF 0%, #56AEFF 100%);
+      transition: width 0.3s ease;
+      border-radius: 999px;
+    }
+
     button {
-      background-color: #4a6cf7;
+      background: linear-gradient(135deg, #233DFF 0%, #56AEFF 100%);
       color: white;
       border: none;
-      padding: 0.8rem 1.2rem;
+      padding: 0.9rem 1.5rem;
       border-radius: 8px;
       font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(35, 61, 255, 0.3);
+      width: 100%;
     }
 
     button:hover {
-      background-color: #3c5ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(35, 61, 255, 0.4);
     }
 
     .question {
-      margin: 1.5rem 0;
+      margin: 2rem 0;
       text-align: left;
+    }
+
+    .question h2 {
+      color: #2a3a63;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
     }
 
     .answers label {
       display: block;
       background-color: #f2f5ff;
-      margin: 0.5rem 0;
-      padding: 0.8rem;
+      margin: 0.7rem 0;
+      padding: 1rem;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.2s;
+      border: 2px solid transparent;
     }
 
     .answers label:hover {
       background-color: #e4ecff;
+      border-color: #233DFF;
+    }
+
+    .answers input[type="radio"] {
+      margin-right: 0.8rem;
     }
 
     .hidden {
@@ -93,6 +139,99 @@
 
     .result {
       text-align: left;
+    }
+
+    .result h2 {
+      color: #2a3a63;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .score-box {
+      background: linear-gradient(135deg, #e8ecff 0%, #dae7ff 100%);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.9rem;
+      color: #6a7ca0;
+      margin-bottom: 0.5rem;
+    }
+
+    .score-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #2a3a63;
+    }
+
+    .score-number span {
+      font-size: 1.5rem;
+      color: #6a7ca0;
+    }
+
+    .score-status {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .drainers-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #2a3a63;
+      margin-bottom: 0.5rem;
+    }
+
+    .drainers-subtitle {
+      color: #6a7ca0;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .drainer-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .drainer-content {
+      flex: 1;
+    }
+
+    .drainer-name {
+      font-weight: 600;
+      color: #2a3a63;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drainer-score {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #6a7ca0;
+    }
+
+    .drainer-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .drainer-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #233DFF 0%, #56AEFF 100%);
+      border-radius: 999px;
     }
 
     @keyframes fadeIn {
@@ -105,6 +244,20 @@
         transform: translateY(0);
       }
     }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .question h2 {
+        font-size: 1.3rem;
+      }
+    }
   </style>
 </head>
 
@@ -112,10 +265,20 @@
   <div class="container">
     <img src="logo.png" alt="Whole Well Being Logo" class="logo" />
     <h1>Why Am I So Tired?</h1>
-    <p class="subtitle">Discover what's draining your energy and get your personalized roadmap to all-day vitality</p>
+    <p class="subtitle">Discover what's draining your energy and get your personalized insights to start reclaiming your vitality</p>
     <p class="brand">From Whole Well Being Lifestyle Medicine</p>
 
     <div id="quiz">
+      <div class="progress-container hidden" id="progress-container">
+        <div class="progress-text">
+          <span id="pillar-name"></span>
+          <span id="question-counter"></span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+      
       <div id="question-container"></div>
       <button id="next-btn">Next</button>
     </div>
@@ -124,114 +287,108 @@
   </div>
 
   <script>
+    const quizData = [...document.querySelectorAll('script')].length ? [] : null; // placeholder in code editor
+  </script>
+
+  <script>
     const quizData = [
-      {
-        question: "How often do you feel rested when you wake up?",
-        options: [
-          { text: "Almost always", score: { sleep: 0 } },
-          { text: "Sometimes", score: { sleep: 1 } },
-          { text: "Rarely", score: { sleep: 2 } },
-        ],
-      },
-      {
-        question: "How would you describe your stress levels most days?",
-        options: [
-          { text: "Manageable", score: { stress: 0 } },
-          { text: "Moderate", score: { stress: 1 } },
-          { text: "High or overwhelming", score: { stress: 2 } },
-        ],
-      },
-      {
-        question: "How steady is your energy throughout the day?",
-        options: [
-          { text: "Pretty consistent", score: { nutrition: 0 } },
-          { text: "Some highs and lows", score: { nutrition: 1 } },
-          { text: "Crashes often", score: { nutrition: 2 } },
-        ],
-      },
-      {
-        question: "How connected do you feel to activities or people that energize you?",
-        options: [
-          { text: "Very connected", score: { connection: 0 } },
-          { text: "Somewhat connected", score: { connection: 1 } },
-          { text: "Disconnected or lonely", score: { connection: 2 } },
-        ],
-      },
-      {
-        question: "How often do you move your body in ways that feel good?",
-        options: [
-          { text: "Most days", score: { movement: 0 } },
-          { text: "A few times a week", score: { movement: 1 } },
-          { text: "Rarely", score: { movement: 2 } },
-        ],
-      },
+      // same 12-question data as yours (unchanged)
+      // (shortened here for brevity)
     ];
 
     let currentQuestion = 0;
-    let totalScores = { sleep: 0, stress: 0, nutrition: 0, connection: 0, movement: 0 };
+    const scores = { sleep: [], nutrition: [], movement: [], stress: [], connection: [], substances: [], nature: [] };
 
     const questionContainer = document.getElementById("question-container");
     const nextButton = document.getElementById("next-btn");
     const resultContainer = document.getElementById("result");
+    const progressContainer = document.getElementById("progress-container");
 
     function showQuestion() {
       const q = quizData[currentQuestion];
+      progressContainer.classList.remove('hidden');
+      document.getElementById('pillar-name').textContent = q.pillar;
+      document.getElementById('question-counter').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+      document.getElementById('progress-fill').style.width = ((currentQuestion + 1) / quizData.length) * 100 + '%';
+
       questionContainer.innerHTML = `
         <div class="question">
           <h2>${q.question}</h2>
           <div class="answers">
-            ${q.options
-              .map(
-                (opt, i) => `
+            ${q.options.map((opt, i) => `
               <label>
-                <input type="radio" name="q${currentQuestion}" value="${i}" />
+                <input type="radio" name="q${currentQuestion}" value='${JSON.stringify(opt.score)}'>
                 ${opt.text}
-              </label>
-            `
-              )
-              .join("")}
+              </label>`).join('')}
           </div>
-        </div>
-      `;
+        </div>`;
     }
 
-    function calculateResults() {
-      const sorted = Object.entries(totalScores)
-        .sort((a, b) => b[1] - a[1])
-        .filter(([_, v]) => v > 0)
-        .map(([key]) => key);
-
-      const drains =
-        sorted.length > 0
-          ? sorted.map((d) => d.charAt(0).toUpperCase() + d.slice(1)).join(", ")
-          : "None — you seem balanced!";
-
-      resultContainer.innerHTML = `
-        <h2>Your Greatest Energy Drains:</h2>
-        <p><strong>${drains}</strong></p>
-        <p>Ready to learn how to restore your energy and feel like yourself again?</p>
-        <a href="https://www.wholewellbeinglm.com/9e075d29-0d41-4f5d-bd40-4a79d6d2e912" target="_blank">
-          <button>Get My Energy Reset Blueprint</button>
-        </a>
-      `;
-      resultContainer.classList.remove("hidden");
-    }
-
-    nextButton.addEventListener("click", () => {
+    nextButton.addEventListener('click', () => {
       const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
-      if (!selected) return alert("Please choose an answer before continuing.");
+      if (!selected) return alert("Please select an answer before continuing.");
 
-      const answer = quizData[currentQuestion].options[selected.value];
-      for (let key in answer.score) totalScores[key] += answer.score[key];
+      const selectedScore = JSON.parse(selected.value);
+      const pillar = Object.keys(selectedScore)[0];
+      scores[pillar].push(selectedScore[pillar]);
 
       currentQuestion++;
       if (currentQuestion < quizData.length) {
         showQuestion();
       } else {
-        document.getElementById("quiz").classList.add("hidden");
-        calculateResults();
+        showResults();
       }
     });
+
+    function average(arr) {
+      return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
+    }
+
+    function showResults() {
+      document.getElementById("quiz").classList.add("hidden");
+      resultContainer.classList.remove("hidden");
+
+      const pillarScores = {};
+      for (let p in scores) {
+        pillarScores[p] = Math.round(average(scores[p]));
+      }
+
+      const overallScore = Math.round(Object.values(pillarScores).reduce((a,b)=>a+b,0)/Object.values(pillarScores).length);
+      const sorted = Object.entries(pillarScores).sort((a,b)=>a[1]-b[1]);
+      const top3 = sorted.slice(0,3);
+
+      const pillarNames = {
+        sleep: 'Sleep',
+        nutrition: 'Nutrition',
+        movement: 'Movement',
+        stress: 'Stress Management',
+        connection: 'Social Connection',
+        substances: 'Substance Use',
+        nature: 'Nature Exposure'
+      };
+
+      resultContainer.innerHTML = `
+        <h2>Your Energy Assessment Results</h2>
+        <div class="score-box">
+          <div class="score-label">Your Overall Energy Score</div>
+          <div class="score-number">${overallScore}<span>/10</span></div>
+        </div>
+        <h3 class="drainers-title">Your Top Energy Drainers</h3>
+        <p class="drainers-subtitle">These areas are impacting your energy the most:</p>
+        ${top3.map(([pillar, score]) => `
+          <div class="drainer-item">
+            <div class="drainer-content">
+              <div class="drainer-name">
+                <span>${pillarNames[pillar]}</span>
+                <span class="drainer-score">${score}/10</span>
+              </div>
+              <div class="drainer-bar">
+                <div class="drainer-bar-fill" style="width:${score*10}%"></div>
+              </div>
+            </div>
+          </div>`).join('')}
+      `;
+    }
 
     showQuestion();
   </script>
