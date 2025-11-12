@@ -652,13 +652,25 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded');
+      console.log('Welcome stage:', document.getElementById('welcome-stage'));
+      console.log('Quiz stage:', document.getElementById('quiz-stage'));
+      
       const startButton = document.getElementById("start-btn");
       const nextButton = document.getElementById("next-btn");
       const logoImg = document.getElementById("logo");
 
-      startButton.addEventListener("click", startQuiz);
+      console.log('Start button:', startButton);
 
-      nextButton.addEventListener("click", function() {
+      if (startButton) {
+        startButton.addEventListener("click", function() {
+          console.log('Start button clicked');
+          startQuiz();
+        });
+      }
+
+      if (nextButton) {
+        nextButton.addEventListener("click", function() {
         const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
         if (!selected) {
           alert("Please choose an answer before continuing.");
