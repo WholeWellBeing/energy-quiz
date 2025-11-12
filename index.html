@@ -527,14 +527,18 @@
 
     let currentQuestion = 0;
     let totalScores = { sleep: 0, nutrition: 0, movement: 0, stress: 0, connection: 0, substances: 0, nature: 0 };
+    let quizStarted = false;
 
     function startQuiz() {
+      if (quizStarted) return;
+      quizStarted = true;
       document.getElementById('welcome-stage').classList.add('hidden');
       document.getElementById('quiz-stage').classList.remove('hidden');
       showQuestion();
     }
 
     function showQuestion() {
+      if (!quizStarted) return;
       const q = quizData[currentQuestion];
       const questionContainer = document.getElementById("question-container");
       
